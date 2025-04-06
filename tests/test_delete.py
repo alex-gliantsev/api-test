@@ -1,20 +1,13 @@
 from endpoints.delete import DeleteItem
-from endpoints.post import CreateItem
 from endpoints.get import GetItem
-from utils.query_factory import QueryPayload
 
 
-def test_delete_item():
-    create_client = CreateItem()
+def test_delete_item(only_create_item):
+    item_id = only_create_item.response_json.get("id")
     delete_client = DeleteItem()
+    delete_client.delete_item(item_id)
+    assert delete_client.status_code_is_200(), f"Expected status code 200 but got {delete_client.response.status_code}"
+    
     get_client = GetItem()
-    payload = QueryPayload.create_laptop_payload()
-    print(payload)
-    # Call the create_item method with the sample payload
-    response = create_client.create_item(payload)
-    response_json = create_client.response_json
-    item_id = response_json.get("id")
-    response = delete_client.delete_item(item_id)
-
-    # Check if the item was deleted successfully
-    response = get_client.get_item(item_id)
+    get_client.get_item(item_id)
+    assert get_client.status_code_is_404(), f"Expected status code 404 but got {get_client.response.status_code}"

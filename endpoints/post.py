@@ -3,12 +3,13 @@ from endpoints.base_api import BaseAPI
 
 
 class CreateItem(BaseAPI):
-    endpoint = "/objects"
+    endpoint = "objects"
 
     def create_item(self, payload, **kwargs):
-        url = f"{BaseAPI.base_url}/{self.endpoint}".rstrip("/")
+        url = f"{BaseAPI.base_url}/{self.endpoint}"
         self.response = requests.post(url, json=payload, **kwargs)
-        self.response_json = self.response.json()
+        self.get_json()
+        return self
 
     def check_name(self, name):
         return self.response_json.get("name") == name
