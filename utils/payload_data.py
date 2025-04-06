@@ -1,6 +1,6 @@
 
 # Default data block for a standard laptop
-DEFAULT_LAPTOP_DATA = {
+DEFAULT_DATA = {
    "year": 2023,
    "price": 1849.99,
    "CPU model": "Intel Core i9",
@@ -8,13 +8,13 @@ DEFAULT_LAPTOP_DATA = {
 }
 
 # Default full payload structure
-DEFAULT_LAPTOP_PAYLOAD = {
+DEFAULT_PAYLOAD = {
    "name": "Apple MacBook Pro 16",
-   "data": DEFAULT_LAPTOP_DATA
+   "data": DEFAULT_DATA
 }
 
 # Example of another complete payload for parameterization
-HUAWEI_MATEBOOK_PAYLOAD = {
+ALTERNATIVE_PAYLOAD = {
     "name": "Huawei MateBook X Pro",
     "data": {
        "year": 2024,
