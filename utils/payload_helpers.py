@@ -1,4 +1,3 @@
-# Пока файл не используется - на будущее.
 
 import copy
 from .payload_data import DEFAULT_PAYLOAD

@@ -1,7 +1,7 @@
 import pytest
+
 from endpoints.post import CreateItem
 from endpoints.delete import DeleteItem
-from utils.payload_data import DEFAULT_PAYLOAD
 from utils.payload_helpers import generate_payload
 
 
@@ -11,6 +11,7 @@ def item_fixture():
     payload = generate_payload()
     create_client.create_item(payload)
     item_id = create_client.response_json.get("id")
+    create_client.item_id = item_id
 
     yield create_client
 
@@ -23,5 +24,7 @@ def create_item():
     create_client = CreateItem()
     payload = generate_payload()
     create_client.create_item(payload)
+    item_id = create_client.response_json.get("id")
+    create_client.item_id = item_id
 
     yield create_client
