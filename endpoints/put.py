@@ -8,3 +8,5 @@ class UpdateItem(BaseAPI):
         url = f"{BaseAPI.base_url}/{endpoint}".rstrip("/")
         self.response = requests.put(url, json=payload, **kwargs)
         self.response_json = self.response.json()
+        self.get_response_json()
+        return self

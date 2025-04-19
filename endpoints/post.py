@@ -8,7 +8,7 @@ class CreateItem(BaseAPI):
     def create_item(self, payload, **kwargs):
         url = f"{BaseAPI.base_url}/{self.endpoint}"
         self.response = requests.post(url, json=payload, **kwargs)
-        self.get_json()
+        self.get_response_json()
         return self
 
     def check_name(self, name):

@@ -6,12 +6,13 @@ from utils.payload_helpers import generate_payload
 
 
 @pytest.fixture
-def item_fixture():
+def item_fixture() -> CreateItem:
     create_client = CreateItem()
     payload = generate_payload()
     create_client.create_item(payload)
     item_id = create_client.response_json.get("id")
     create_client.item_id = item_id
+    create_client.payload = payload
 
     yield create_client
 

@@ -7,5 +7,5 @@ class GetItem(BaseAPI):
         endpoint = f"objects/{item_id}"
         url = f"{BaseAPI.base_url}/{endpoint}"
         self.response = requests.get(url, **kwargs)
-        self.get_json()
+        self.get_response_json()
         return self
