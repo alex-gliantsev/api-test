@@ -1,7 +1,6 @@
 import requests
 import jsonschema
 from jsonschema import validate
-from datetime import datetime
 from config import BASE_URL
 
 
@@ -23,6 +22,9 @@ class BaseAPI:
 
     def assert_status_code_is_404(self):
         self.assert_status_code(404)
+        
+    def assert_status_code_is_400(self):
+        self.assert_status_code(400)
 
     def get_response_json(self):
         try:
@@ -58,3 +60,10 @@ class BaseAPI:
         except jsonschema.exceptions.SchemaError as e:
             # This indicates an error in the schema definition itself
             assert False, f"Assertion Failed: Invalid Schema provided.\nSchema: {schema}\nSchema Error: {e.message}"
+            
+    def assert_client_error_message(self):
+        """
+        Asserts that the response JSON contains the correct error message.
+        """
+        expected_message = "400 Bad Request. If you are trying to create or update the data, potential issue is that you are sending incorrect body json or it is missing at all."
+        self.assert_response_json_value_equals("error", expected_message)
