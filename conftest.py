@@ -19,7 +19,6 @@ def item_fixture() -> CreateItem:
     delete_client = DeleteItem()
     delete_client.delete_item(item_id)
 
-
 @pytest.fixture
 def create_item():
     create_client = CreateItem()

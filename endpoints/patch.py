@@ -1,7 +1,6 @@
 import requests
 from endpoints.base_api import BaseAPI
 
-
 class PartiallyUpdateItem(BaseAPI):
     def update_item(self, item_id, payload, **kwargs):
         endpoint = f"/objects/{item_id}"

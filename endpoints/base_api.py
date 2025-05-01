@@ -1,4 +1,7 @@
 import requests
+import jsonschema
+from jsonschema import validate
+from datetime import datetime
 from config import BASE_URL
 
 
@@ -8,7 +11,7 @@ class BaseAPI:
     base_url = BASE_URL
     endpoint: str
 
-    # The general assertion helper
+    # The general status code assertion helper
     def assert_status_code(self, expected_code: int):
         actual_code = self.response.status_code if self.response else "N/A"
         assert actual_code == expected_code, (
@@ -29,24 +32,29 @@ class BaseAPI:
             self.response_json = None
             return None
 
-    def assert_response_json_has_key(self, key: str):
-        assert isinstance(self.response_json, dict), (
-            f"Assertion Failed: Expected JSON response to be a dictionary, but got {type(self.response_json)}. Response: {self.response_json}"
-        )
-        assert key in self.response_json, (
-            f"Assertion Failed: Response JSON does not contain expected key '{key}'. Keys found: {list(self.response_json.keys())}. Response: {self.response_json}"
-        )
-
     def assert_respnse_json_value_is_not_none(self, key: str):
-        self.assert_response_json_has_key(key)
         value = self.response_json.get(key)
         assert value is not None, (
             f"Assertion Failed: Value for key '{key}' is None. Response: {self.response_json}"
         )
 
     def assert_response_json_value_equals(self, key: str, expected_value):
-        self.assert_response_json_has_key(key)
         actual_value = self.response_json.get(key)
         assert actual_value == expected_value, (
             f"Assertion Failed: Expected value for key '{key}' to be '{expected_value}', but got '{actual_value}'. Response: {self.response_json}"
         )
+            
+    def assert_response_matches_schema(self, schema: dict):
+        """
+        Validates the response JSON against the provided JSON schema.
+        """
+        assert self.response_json is not None, \
+            f"Assertion Failed: Cannot validate schema, response_json is None. Status: {self.response.status_code if self.response else 'N/A'}"
+        try:
+            validate(instance=self.response_json, schema=schema)
+        except jsonschema.exceptions.ValidationError as e:
+            # Raise assertion error with details from the validation error
+            assert False, f"Assertion Failed: JSON response does not match schema.\nSchema: {schema}\nResponse: {self.response_json}\nValidation Error: {e.message}"
+        except jsonschema.exceptions.SchemaError as e:
+            # This indicates an error in the schema definition itself
+            assert False, f"Assertion Failed: Invalid Schema provided.\nSchema: {schema}\nSchema Error: {e.message}"

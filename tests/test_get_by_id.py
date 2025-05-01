@@ -1,4 +1,5 @@
 from endpoints.get import GetItem
+from utils.schemas import GET_ITEM_SCHEMA
 
 
 def test_get_item_by_id(item_fixture):
@@ -9,7 +10,7 @@ def test_get_item_by_id(item_fixture):
     get_client.get_item(item_id)
 
     get_client.assert_status_code_is_200()
-    get_client.assert_response_json_has_key("id")
+    get_client.assert_response_matches_schema(GET_ITEM_SCHEMA)
     get_client.assert_response_json_value_equals("id", item_id)
     get_client.assert_response_json_value_equals("name", payload["name"])
     get_client.assert_response_json_value_equals("data", payload["data"])
