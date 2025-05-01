@@ -14,3 +14,13 @@ def test_get_item_by_id(item_fixture):
     get_client.assert_response_json_value_equals("id", item_id)
     get_client.assert_response_json_value_equals("name", payload["name"])
     get_client.assert_response_json_value_equals("data", payload["data"])
+
+
+def test_get_item_by_non_existent_id():
+    get_client = GetItem()
+    item_id = "non_existent_id_12345"
+
+    get_client.get_item(item_id)
+
+    get_client.assert_status_code_is_404()
+    get_client.assert_item_not_found_error_message(item_id)

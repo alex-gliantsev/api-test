@@ -26,6 +26,7 @@ def create_item():
     create_client.create_item(payload)
     item_id = create_client.response_json.get("id")
     create_client.item_id = item_id
+    create_client.payload = payload
 
     yield create_client
 

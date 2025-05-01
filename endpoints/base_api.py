@@ -12,9 +12,9 @@ class BaseAPI:
 
     # The general status code assertion helper
     def assert_status_code(self, expected_code: int):
-        actual_code = self.response.status_code if self.response else "N/A"
+        actual_code = self.response.status_code
         assert actual_code == expected_code, (
-            f"Assertion Failed: Expected status code {expected_code} but got {actual_code}. Response: {self.response.text if self.response else 'No response'}"
+            f"Assertion Failed: Expected status code {expected_code} but got {actual_code}. Response: {self.response.text}"
         )
 
     def assert_status_code_is_200(self):
@@ -22,7 +22,7 @@ class BaseAPI:
 
     def assert_status_code_is_404(self):
         self.assert_status_code(404)
-        
+
     def assert_status_code_is_400(self):
         self.assert_status_code(400)
 
@@ -45,25 +45,37 @@ class BaseAPI:
         assert actual_value == expected_value, (
             f"Assertion Failed: Expected value for key '{key}' to be '{expected_value}', but got '{actual_value}'. Response: {self.response_json}"
         )
-            
+
     def assert_response_matches_schema(self, schema: dict):
         """
         Validates the response JSON against the provided JSON schema.
         """
-        assert self.response_json is not None, \
-            f"Assertion Failed: Cannot validate schema, response_json is None. Status: {self.response.status_code if self.response else 'N/A'}"
+        assert self.response_json is not None, (
+            f"Assertion Failed: Cannot validate schema, response_json is None. Status: {self.response.status_code}"
+        )
         try:
             validate(instance=self.response_json, schema=schema)
         except jsonschema.exceptions.ValidationError as e:
             # Raise assertion error with details from the validation error
-            assert False, f"Assertion Failed: JSON response does not match schema.\nSchema: {schema}\nResponse: {self.response_json}\nValidation Error: {e.message}"
+            assert False, (
+                f"Assertion Failed: JSON response does not match schema.\nSchema: {schema}\nResponse: {self.response_json}\nValidation Error: {e.message}"
+            )
         except jsonschema.exceptions.SchemaError as e:
             # This indicates an error in the schema definition itself
-            assert False, f"Assertion Failed: Invalid Schema provided.\nSchema: {schema}\nSchema Error: {e.message}"
-            
-    def assert_client_error_message(self):
+            assert False, (
+                f"Assertion Failed: Invalid Schema provided.\nSchema: {schema}\nSchema Error: {e.message}"
+            )
+
+    def assert_item_not_found_error_message(self, item_id: str):
         """
         Asserts that the response JSON contains the correct error message.
         """
-        expected_message = "400 Bad Request. If you are trying to create or update the data, potential issue is that you are sending incorrect body json or it is missing at all."
+        expected_message = f"Oject with id={item_id} was not found."
+        self.assert_response_json_value_equals("error", expected_message)
+
+    def assert_item_do_not_exist_error_message(self, item_id: str):
+        """
+        Asserts that the response JSON contains the correct error message.
+        """
+        expected_message = f"Object with id = {item_id} doesn't exist."
         self.assert_response_json_value_equals("error", expected_message)
