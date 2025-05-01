@@ -16,7 +16,7 @@ FULL_PAYLOAD = {
         "year": 2024,
         "price": 1799.00,
         "CPU model": "Intel Core i7",
-        "Hard disk size": "1 TB",
+        "Hard disk size": "512 GB",
         "color": "silver"
     },
 }
