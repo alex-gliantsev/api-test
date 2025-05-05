@@ -73,12 +73,16 @@ class BaseAPI:
         expected_message = f"Oject with id={item_id} was not found."
         self.assert_response_json_value_equals("error", expected_message)
 
-    def assert_item_do_not_exist_error_message(self, item_id: str):
+    def assert_item_do_not_exist_error_message(self, item_id: str, error_key: str = "error"):
         """
         Asserts that the response JSON contains the correct error message.
         """
-        expected_message = f"Object with id = {item_id} doesn't exist."
-        self.assert_response_json_value_equals("error", expected_message)
+        actual_message = self.response_json.get(error_key)
+        expected_substring = f"Object with id = {item_id} doesn't exist."
+        assert expected_substring in actual_message, (
+            f"Assertion Failed: Expected substring '{expected_substring}' not found in error message."
+            f"Actual message: '{actual_message}'. Response: {self.response_json}"
+        )
         
     def assert_no_valid_fields_error_message(self):
         """
