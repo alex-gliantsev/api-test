@@ -6,7 +6,7 @@ DEFAULT_PAYLOAD = {
         "price": 1849.99,
         "CPU model": "Intel Core i9",
         "Hard disk size": "1 TB",
-    }
+    },
 }
 
 # Example of another complete payload for parameterization
@@ -17,24 +17,10 @@ FULL_PAYLOAD = {
         "price": 1799.00,
         "CPU model": "Intel Core i7",
         "Hard disk size": "512 GB",
-        "color": "silver"
+        "color": "silver",
     },
 }
 
-UPDATE_NAME = {
-    "name": "Huawei MateBook X Pro"
-    }
+UPDATE_NAME = {"name": "Huawei MateBook X Pro"}
 
-# Example of data variations for parameterization
-UPDATE_DATA_PRICE = {
-    "data": {
-        "price": 999.99
-        }
-    }
-
-ADDITIONAL_DATA = {
-    "data": {
-        "color": "silver"
-        }
-    }
-
+UPDATE_DATA = {"data": {"price": 999.99}}

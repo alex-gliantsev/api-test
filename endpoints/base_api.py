@@ -79,3 +79,10 @@ class BaseAPI:
         """
         expected_message = f"Object with id = {item_id} doesn't exist."
         self.assert_response_json_value_equals("error", expected_message)
+        
+    def assert_no_valid_fields_error_message(self):
+        """
+        Asserts that the response JSON contains the correct error message.
+        """
+        expected_message = "No valid field(s) to update have been passed as part of a request body."
+        self.assert_response_json_value_equals("error", expected_message)
