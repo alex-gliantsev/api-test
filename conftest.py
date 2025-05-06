@@ -7,6 +7,16 @@ from utils.payload_helpers import generate_payload
 
 @pytest.fixture
 def item_fixture() -> CreateItem:
+    """
+    Fixture to create an item before a test and delete it after the test.
+
+    This fixture creates an item using the CreateItem client and generates a payload.
+    The created item's ID and payload are stored in the client for use during the test.
+    After the test, the item is automatically deleted using the DeleteItem client.
+
+    Returnes:
+        CreateItem: The client instance with the created item's details.
+    """
     create_client = CreateItem()
     payload = generate_payload()
     create_client.create_item(payload)
@@ -21,6 +31,15 @@ def item_fixture() -> CreateItem:
 
 @pytest.fixture
 def create_item():
+    """
+    Fixture to create an item before a test.
+
+    This fixture uses the CreateItem client to generate a payload and create an item.
+    The created item's ID and payload are stored in the client for use during the test.
+
+    Yields:
+        CreateItem: The client instance with the created item's details.
+    """
     create_client = CreateItem()
     payload = generate_payload()
     create_client.create_item(payload)

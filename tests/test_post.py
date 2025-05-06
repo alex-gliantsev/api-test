@@ -1,8 +1,11 @@
+import allure
 from endpoints.post import CreateItem
 from conftest import RegisterCleanupFunc
 from utils.schemas import POST_ITEM_SCHEMA
 from utils.payload_data import FULL_PAYLOAD
 
+@allure.title("Test Create Item")
+@allure.description("Test creating an item with standart payload and verifying the response.")
 def test_create_item(item_fixture: CreateItem):
     create_client = item_fixture
     payload = create_client.payload
@@ -11,7 +14,9 @@ def test_create_item(item_fixture: CreateItem):
     create_client.assert_response_matches_schema(POST_ITEM_SCHEMA)
     create_client.assert_response_json_value_equals("name", payload["name"])
     create_client.assert_response_json_value_equals("data", payload["data"])
-    
+
+@allure.title("Test Create Item With Full Payload")
+@allure.description("Test creating an item with full payload and verifying the response.")    
 def test_create_item_with_full_payload(register_item_for_cleanup: RegisterCleanupFunc):
     create_client = CreateItem()
     payload = FULL_PAYLOAD
