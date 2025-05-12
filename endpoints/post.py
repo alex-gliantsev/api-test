@@ -1,7 +1,6 @@
 import requests
 from endpoints.base_api import BaseAPI
 
-
 class CreateItem(BaseAPI):
     
     # Creates a new item with the provided payload and retrieves the response JSON.

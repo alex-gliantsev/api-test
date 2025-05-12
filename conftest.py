@@ -4,7 +4,6 @@ from endpoints.post import CreateItem
 from endpoints.delete import DeleteItem
 from utils.payload_helpers import generate_payload
 
-
 @pytest.fixture
 def item_fixture() -> CreateItem:
     """
@@ -14,7 +13,7 @@ def item_fixture() -> CreateItem:
     The created item's ID and payload are stored in the client for use during the test.
     After the test, the item is automatically deleted using the DeleteItem client.
 
-    Returnes:
+    Return:
         CreateItem: The client instance with the created item's details.
     """
     create_client = CreateItem()

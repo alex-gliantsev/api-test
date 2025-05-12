@@ -3,7 +3,6 @@ import jsonschema
 from jsonschema import validate
 from config import BASE_URL
 
-
 class BaseAPI:
     response = None
     response_json = None
@@ -40,7 +39,7 @@ class BaseAPI:
             self.response_json = None
             return None
 
-    def assert_respnse_json_value_is_not_none(self, key: str):
+    def assert_response_json_value_is_not_none(self, key: str):
         """
         Asserts that the value for the given key in the response JSON is not None.
         """
