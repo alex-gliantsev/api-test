@@ -1,7 +1,6 @@
 import requests
 from endpoints.base_api import BaseAPI
 
-
 class DeleteItem(BaseAPI):
     
     # Deletes an item by its ID and retrieves the response JSON.
