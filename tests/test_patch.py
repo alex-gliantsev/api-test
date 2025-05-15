@@ -3,6 +3,7 @@ from endpoints.patch import PartiallyUpdateItem
 from endpoints.get import GetItem
 from utils.payload_data import UPDATE_NAME, UPDATE_DATA
 from utils.schemas import UPDATE_ITEM_SCHEMA, GET_ITEM_SCHEMA
+from utils.id_generator import generate_unique_id
 
 
 @allure.title("Test Update Item Name")
@@ -95,7 +96,7 @@ def test_get_updated_item_after_patch(item_fixture):
 )
 def test_update_non_existent_item():
     update_client = PartiallyUpdateItem()
-    item_id = "non_existent_id_12345"
+    item_id = generate_unique_id()
     payload = UPDATE_NAME
 
     update_client.update_item(item_id, payload)

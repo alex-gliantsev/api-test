@@ -1,6 +1,7 @@
 import allure
 from endpoints.get import GetItem
 from utils.schemas import GET_ITEM_SCHEMA
+from utils.id_generator import generate_unique_id
 
 @allure.title("Test Get Item By ID")
 @allure.description("Test getting an item by its ID and verifying the response.")
@@ -21,7 +22,7 @@ def test_get_item_by_id(item_fixture):
 @allure.description("Test getting an item by a non-existent ID and verifying the error response.")
 def test_get_item_by_non_existent_id():
     get_client = GetItem()
-    item_id = "non_existent_id_12345"
+    item_id = generate_unique_id()
 
     get_client.get_item(item_id)
 

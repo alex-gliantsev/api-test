@@ -2,6 +2,7 @@ import allure
 from endpoints.delete import DeleteItem
 from endpoints.get import GetItem
 from utils.schemas import DELETE_SUCCESS_SCHEMA
+from utils.id_generator import generate_unique_id
 
 
 @allure.title("Test Delete Item")
@@ -40,7 +41,7 @@ def test_get_deleted_item(create_item):
 )
 def test_delete_non_existent_item():
     delete_client = DeleteItem()
-    item_id = "non_existent_id_12345"
+    item_id = generate_unique_id()
 
     delete_client.delete_item(item_id)
 

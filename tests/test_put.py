@@ -3,6 +3,7 @@ from endpoints.put import UpdateItem
 from endpoints.get import GetItem
 from utils.payload_data import FULL_PAYLOAD
 from utils.schemas import UPDATE_ITEM_SCHEMA, GET_ITEM_SCHEMA
+from utils.id_generator import generate_unique_id
 
 
 @allure.title("Test Full Update Item")
@@ -45,7 +46,7 @@ def test_get_updated_item_after_put(item_fixture):
 @allure.title("Test Attempt to Update a Non-Existent Item")
 def test_update_non_existent_item():
     update_client = UpdateItem()
-    item_id = "non_existent_id_12345"
+    item_id = generate_unique_id()
     payload = FULL_PAYLOAD
 
     update_client.update_item(item_id, payload)
