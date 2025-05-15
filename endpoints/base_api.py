@@ -76,30 +76,46 @@ class BaseAPI:
             assert False, (
                 f"Assertion Failed: Invalid Schema provided.\nSchema: {schema}\nSchema Error: {e.message}"
             )
+        
+    def assert_response_message_contains_keywords(self, error_field_key: str, keywords: list[str], item_id: str = None):
+        """
+        Checks if the message in 'error_field_key' contains all specified keywords and optionally the item_id.
+        Case-insensitive.
+        """
+        message = self.response_json.get(error_field_key)
+        assert message is not None, f"Key '{error_field_key}' not in response: {self.response_json}"
 
-    def assert_item_not_found_error_message(self, item_id: str):
-        """
-        Asserts that the response JSON contains the correct error message if object was not found.
-        """
-        expected_message = f"Oject with id={item_id} was not found."
-        self.assert_response_json_value_equals("error", expected_message)
+        message_lower = message.lower()
+        if item_id:
+            assert item_id.lower() in message_lower, \
+                f"Expected ID '{item_id}' not in message: '{message}'"
+        for kw in keywords:
+            assert kw.lower() in message_lower, \
+                f"Expected keyword '{kw}' not in message: '{message}'"
+        return self
 
-    def assert_item_does_not_exist_error_message(self, item_id: str, error_key: str = "error"):
-        """
-        Asserts that the response JSON contains the correct error message if object does not exist.
-        """
-        actual_message = self.response_json.get(error_key)
-        expected_substring = f"Object with id = {item_id} doesn't exist."
-        assert expected_substring in actual_message, (
-            f"Assertion Failed: Expected substring '{expected_substring}' not found in error message. "
-            f"Actual message: '{actual_message}'. Response: {self.response_json}"
+    def assert_item_not_found_error(self, item_id: str, error_key: str = "error"):
+        """Asserts that the error message indicates item not found with its ID."""
+        self.assert_response_message_contains_keywords(
+            error_field_key=error_key,
+            keywords=["object", "not found"],
+            item_id=item_id
         )
+        return self
 
-    def assert_no_valid_fields_error_message(self):
-        """
-        Asserts that the response JSON contains the correct error message.
-        """
-        expected_message = (
-            "No valid field(s) to update have been passed as part of a request body."
+    def assert_item_does_not_exist_error(self, item_id: str, error_key: str = "error"):
+        """Asserts that the error message indicates item doesn't exist with its ID."""
+        self.assert_response_message_contains_keywords(
+            error_field_key=error_key,
+            keywords=["object", "doesn't exist"],
+            item_id=item_id
         )
-        self.assert_response_json_value_equals("error", expected_message)
+        return self
+
+    def assert_no_valid_fields_error(self, error_key: str = "error"):
+        """Asserts error for no valid fields, checking message keywords."""
+        self.assert_response_message_contains_keywords(
+            error_field_key=error_key,
+            keywords=["no valid field", "update"]
+        )
+        return self

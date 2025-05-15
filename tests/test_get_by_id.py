@@ -26,4 +26,4 @@ def test_get_item_by_non_existent_id():
     get_client.get_item(item_id)
 
     get_client.assert_status_code_is_404()
-    get_client.assert_item_not_found_error_message(item_id)
+    get_client.assert_item_not_found_error(item_id=item_id)

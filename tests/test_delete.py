@@ -45,4 +45,4 @@ def test_delete_non_existent_item():
     delete_client.delete_item(item_id)
 
     delete_client.assert_status_code_is_404()
-    delete_client.assert_item_does_not_exist_error_message(item_id)
+    delete_client.assert_item_does_not_exist_error(item_id=item_id)

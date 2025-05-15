@@ -51,4 +51,4 @@ def test_update_non_existent_item():
     update_client.update_item(item_id, payload)
 
     update_client.assert_status_code_is_404()
-    update_client.assert_item_does_not_exist_error_message(item_id)
+    update_client.assert_item_does_not_exist_error(item_id=item_id)
