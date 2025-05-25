@@ -33,8 +33,3 @@ Tests are executed using Pytest. After test execution, Allure can be used to gen
 `addopts = -s -v -ra --tb=short --colour=yes --alluredir=./allure-results --clean-alluredir`
 
 This configuration enables verbose output, short tracebacks, colored output, and specifies the Allure results directory, ensuring it's cleaned before each run.
-
-## 6. Potential Future Improvements
-*   Advanced test parameterization.
-*   CI/CD integration (e.g., GitHub Actions).
-*   Environment-specific configurations.
