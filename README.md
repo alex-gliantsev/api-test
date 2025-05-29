@@ -1,7 +1,9 @@
-# API Test Automation Framework for restful-api.dev
+# API Test Automation project
 
 ## 1. Introduction
-This project is a Python-based API test automation framework designed to test the functionalities of the [restful-api.dev](https://api.restful-api.dev/) service. It automates tests for common CRUD (Create, Read, Update, Delete) operations, serving as a practical demonstration of API testing skills.
+This repository contains a lightweight Python-based API test automation project built with pytest and requests. It demonstrates core concepts and best practices of API testing, including structured test organization, reusable request handlers, and response validation.
+
+The project targets the demo service at [restful-api.dev](https://api.restful-api.dev/) and covers typical CRUD (Create, Read, Update, Delete) operations. It is intended as a practical showcase of API test automation skills and a starting point for extending into more complex scenarios.
 
 ## 2. Project Goal
 The primary objective is to showcase foundational abilities in API test automation, including:
